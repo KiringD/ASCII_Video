@@ -1,0 +1,1 @@
+int split_video(std::string video_name, int using_fps, bool recreate_frames);

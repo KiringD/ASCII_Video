@@ -8,17 +8,17 @@
 using namespace cv;
 using namespace std;
 
-int split_video(string video_name, int using_fps, bool recreate_frames){
+int split_video(string video_name, string cutted_video_name, int using_fps, bool recreate_frames){
     VideoCapture cap(video_name);
 
-    
     if(!cap.isOpened()){
         return -1;
     }
     if (recreate_frames){
-        filesystem::remove_all(format("%s-%d-opencv",video_name.c_str(),using_fps));
+        filesystem::remove_all(format("%s-%d-opencv",cutted_video_name.c_str(),using_fps));
     }
-    bool is_not_created = filesystem::create_directory(format("%s-%d-opencv",video_name.c_str(),using_fps));
+    cout << video_name.c_str() << endl;
+    bool is_not_created = filesystem::create_directory(format("%s-%d-opencv",cutted_video_name.c_str(),using_fps));
     int video_fps = cap.get(CAP_PROP_FPS);
 
     int frames_count = cap.get(CAP_PROP_FRAME_COUNT);
@@ -46,7 +46,7 @@ int split_video(string video_name, int using_fps, bool recreate_frames){
                 break;
 
             if (counter*frame_duration >= new_frame_duration){
-                imwrite(format("%s-%d-opencv/frame%d.jpg",video_name.c_str(),using_fps,++final_counter), frame);
+                imwrite(format("%s-%d-opencv/frame%d.jpg",cutted_video_name.c_str(),using_fps,++final_counter), frame);
                 counter = 0;
             }
             counter++;
@@ -59,7 +59,7 @@ int split_video(string video_name, int using_fps, bool recreate_frames){
     else {
         while (true) {
             ifstream iff;
-            iff.open(format("%s-%d-opencv/frame%d.jpg",video_name.c_str(),using_fps,++final_counter));
+            iff.open(format("%s-%d-opencv/frame%d.jpg",cutted_video_name.c_str(),using_fps,++final_counter));
             if (!iff.is_open()) {
                 iff.close();
                 break;

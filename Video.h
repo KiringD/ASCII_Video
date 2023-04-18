@@ -1,1 +1,1 @@
-int split_video(std::string video_name, int using_fps, bool recreate_frames);
+int split_video(std::string video_name, std::string cutted_video_name, int using_fps, bool recreate_frames);

@@ -29,6 +29,7 @@ void help();
 
 int main(int argc, char **argv)
 {
+    
     ios_base::sync_with_stdio(true);
 
     string video_name;
@@ -40,6 +41,7 @@ int main(int argc, char **argv)
     bool recreate_frames = false;
 
     int counter = 0;
+    
     for(int i = 0; i<argc; i++){
         if (argv[i][0] == '-' && argv[i][1] == '-') {
             if (string_view(argv[i]) == "--help"){
@@ -104,16 +106,15 @@ int main(int argc, char **argv)
     ioctl(STDOUT_FILENO, TIOCGWINSZ, &w);
 
     string cutted_video_name;
-    int i = video_name.length()-1;
-    while (true){
+    for (int i = video_name.length()-1; i >= 0; i--){
         if (video_name[i] != '/'){
             cutted_video_name += video_name[i];
-            i--;
         }
         else{
             break;
         }
     }
+
     reverse(cutted_video_name.begin(), cutted_video_name.end());
 
     string* FramesList;
@@ -346,7 +347,7 @@ string* compress(string* array, int frame_count){
         frame += to_string(local_counter);
         frame += '>';
         if (array[i][array[i].length()-1] != '\n'){
-            array[i][array[i].length()-1];
+            frame += array[i][array[i].length()-1];
         }
         else{
             frame += '<';

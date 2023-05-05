@@ -11,6 +11,8 @@ using namespace std;
 int split_video(string video_name, string cutted_video_name, int using_fps, bool recreate_frames){
     VideoCapture cap(video_name);
 
+    cout << video_name << " " << cutted_video_name << endl;
+
     if(!cap.isOpened()){
         return -1;
     }
